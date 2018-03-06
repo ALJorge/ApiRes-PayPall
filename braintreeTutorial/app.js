@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-
 var app = express();
 
 // view engine setup
@@ -22,11 +21,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+app.use('/pago', index);
 app.use('/users', users);
 // The checkout route
 var checkout = require('./routes/checkout');
 app.use('/checkout', checkout);
+
+app.use('/producto', (req,res) =>{
+  res.render('producto')
+})
+
+app.use('/curso1', (req,res) =>{
+  res.render('cursoandroid')
+})
+
+app.use('/curso2', (req,res) =>{
+  res.render('cursospring')
+})
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

@@ -1,6 +1,37 @@
+
+<div class="col-md-4 col-md-offset-4">
+
+<h1>DATOS</h1>
+    </div>
+<div class="col-md-5 col-md-offset-1"></div>
+<div class="form-group row">
+  <label for="nombre" >Nombre</label>
+  <input  type="text" class="form-control" id="firstName">
+</div>
+
+
+<div class="form-group row">
+  <label for="email">E-mail</label>
+  <input type="email" class="form-control" id="email">
+</div>
+
+</div>
+
+<div class="col-md-5 col-md-offset-1">
+<div class="form-group row">
+  <label for="tel">Telephone</label>
+  <input type="number" class="form-control" id="phone">
+</div>
+
+<div class="form-group row">
+  <label for="empresa">Company Name</label>
+  <input type="text" class="form-control"   id="company">
+</div>
+</div>
+
 <div id="dropin-wrapper">
   <div id="checkout-message"></div>
-  <div id="dropin-container"></div>
+  <div id="dropin-container"> </div>
   <button id="submit-button">Submit payment</button>
 </div>
 <script>
@@ -8,7 +39,7 @@
 
   braintree.dropin.create({
     // Insert your tokenization key here
-    authorization: '<sandbox_jcb2zfj4_jzfz4cwchfz6p736>',
+    authorization: 'sandbox_jcb2zfj4_jzfz4cwchfz6p736',
     container: '#dropin-container'
   }, function (createErr, instance) {
     button.addEventListener('click', function () {
@@ -18,7 +49,12 @@
         $.ajax({
           type: 'POST',
           url: '/checkout',
-          data: {'paymentMethodNonce': payload.nonce}
+          data: {'paymentMethodNonce': payload.nonce,
+          'primerNombre': document.getElementById('nombre').value,
+                  'apellido': document.getElementById('apellido').value,
+                  'telefono': document.getElementById('telefono').value,
+                  'correo': document.getElementById('correo').value,
+                  'compania': document.getElementById('compania').value}
         }).done(function(result) {
           // Tear down the Drop-in UI
           instance.teardown(function (teardownErr) {
