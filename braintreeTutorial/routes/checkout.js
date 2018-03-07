@@ -11,23 +11,21 @@ router.post('/', function(req, res, next) {
     privateKey: '5e0aebb3043ba77797ff347ec5627058'
   });
 
-  // Use the payment method nonce here
   var nonceFromTheClient = req.body.paymentMethodNonce;
-  // Create a new transaction for $10
- var primerNombre = req.body.primerNombre;
+  var primerNombre = req.body.primerNombre;
   var apellido = req.body.apellido;
-  var telefono = req.body.telefono;
-  var correo = req.body.correo;
-  var compania = req.body.compania;
+  var mail = req.body.mail;
+  var precio = req.body.precio;
+
+  //console.log("El precio es: "+precio);
+  // Create a new transaction for $10
   var newTransaction = gateway.transaction.sale({
-    amount: '10.00',
+    amount: precio,
     paymentMethodNonce: nonceFromTheClient,
     customer: {
-      firstName: primerNombre, 
+      firstName: primerNombre,
       lastName: apellido,
-      telefono: telefono,
-      correo: correo,
-      company: compania
+      email: mail
     },
     options: {
       // This option requests the funds from the transaction

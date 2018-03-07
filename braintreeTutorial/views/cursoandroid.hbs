@@ -1,4 +1,18 @@
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<script>
+window.onload = function(){
+  var a = localStorage.getItem("nombre");
+  var r = localStorage.getItem("ruta");
+ 
+
+
+  document.getElementById('nombreP').innerText = a;
+  document.getElementById('foto').src = r;
+   
+ 
+}
+</script>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
         <a class="navbar-brand" href="#">Start Bootstrap</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,27 +41,42 @@
 <div class="container">
 
       <!-- Portfolio Item Heading -->
-      <h1 class="my-4">Page Heading
-        <small>Secondary Text</small>
+      <h1 class="my-4">Detalles del Curso
+       
       </h1>
 
       <!-- Portfolio Item Row -->
       <div class="row">
 
         <div class="col-md-8">
-          <img class="img-fluid" src="https://www.teknepolis.com/wp-content/uploads/2017/11/android-logo.png"  alt="">
+         <img src="" alt="" id="foto">
+           
         </div>
 
         <div class="col-md-4">
-          <h3 class="my-3">Curso Android fundamentasl</h3>
+          <h3 class="my-3" id="nombreP"></h3>
           <h3 class="my-3">Project Details</h3>
           <ul>
-            <li>Curso presencial</li>
+            <li >Curso presencial</li>
             <li>Costo : $15000</li>
+             
             <li>Instructor: Jose Cajiga </li>
-              <li>Tiempo estimado del Curos : 01:00pm</li>
-            
+              <li>Tiempo estimado del Curos : 4 semanas</li>
+              
           </ul>
+           <button type="button" onclick="pago1()" class="btn btn-primary btn-lg">Pago</button>
         </div>
 
       </div>
+    
+    <script type="text/javascript">
+
+function pago1(){
+  
+
+
+  window.location.assign('http://localhost:3000/')
+}
+
+
+</script>

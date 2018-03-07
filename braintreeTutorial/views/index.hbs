@@ -1,41 +1,79 @@
 
-<div class="col-md-4 col-md-offset-4">
-
-<h1>DATOS</h1>
-    </div>
-<div class="col-md-5 col-md-offset-1"></div>
-<div class="form-group row">
-  <label for="nombre" >Nombre</label>
-  <input  type="text" class="form-control" id="firstName">
-</div>
+<script>
+window.onload = function(){
+  var a = localStorage.getItem("nombre");
+  var r = localStorage.getItem("ruta");
+ var p = localStorage.getItem("precio");
 
 
-<div class="form-group row">
-  <label for="email">E-mail</label>
-  <input type="email" class="form-control" id="email">
-</div>
+  document.getElementById('nombreP').innerText = a;
+  document.getElementById('foto').src = r;
+   
+ document.getElementById('precio1').innerText = p;
 
-</div>
+}
+</script>
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Start Bootstrap</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/producto">Productos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-<div class="col-md-5 col-md-offset-1">
-<div class="form-group row">
-  <label for="tel">Telephone</label>
-  <input type="number" class="form-control" id="phone">
-</div>
 
-<div class="form-group row">
-  <label for="empresa">Company Name</label>
-  <input type="text" class="form-control"   id="company">
+ <div class="row">
+        <div class="col-lg-6">
+        <h1>DATOS</h1>
+<div class="form-group">
+      <label for="inputlg">Nombre</label>
+      <input type="text" class="form-control input-lg" id="nombre" placeholder="Nombre">
 </div>
+<div class="form-group">
+  <label for="inputlg">Primer Apellido</label>
+  <input type="text" class="form-control input-lg" id="apellido" placeholder="Apellido" name="">
 </div>
+<div class="form-group">
+  <label for="inputlg">Email</label>
+  <input type="email" class="form-control input-lg" id="mail" placeholder="email" name="">
+</div>
+        </div>
+        <div class="col-lg-6">
+             <h3 class="my-3" id="nombreP"></h3>
+          <img class="img-fluid rounded" src="" alt="" id="foto">
+           <h1 id="precio1"></h1>
+        </div>
+      </div>
+
 
 <div id="dropin-wrapper">
   <div id="checkout-message"></div>
   <div id="dropin-container"> </div>
   <button id="submit-button">Submit payment</button>
 </div>
+
 <script>
   var button = document.querySelector('#submit-button');
+
 
   braintree.dropin.create({
     // Insert your tokenization key here
@@ -46,15 +84,16 @@
       instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
         // When the user clicks on the 'Submit payment' button this code will send the
         // encrypted payment information in a variable called a payment method nonce
+        var precio = localStorage.getItem("precio");
         $.ajax({
           type: 'POST',
           url: '/checkout',
           data: {'paymentMethodNonce': payload.nonce,
-          'primerNombre': document.getElementById('nombre').value,
+                  'primerNombre': document.getElementById('nombre').value,
                   'apellido': document.getElementById('apellido').value,
-                  'telefono': document.getElementById('telefono').value,
-                  'correo': document.getElementById('correo').value,
-                  'compania': document.getElementById('compania').value}
+                  'compania': document.getElementById('mail').value,
+                  'precio': precio
+                }
         }).done(function(result) {
           // Tear down the Drop-in UI
           instance.teardown(function (teardownErr) {
@@ -69,6 +108,7 @@
 
           if (result.success) {
             $('#checkout-message').html('<h1>Success</h1><p>Your Drop-in UI is working! Check your <a href="https://sandbox.braintreegateway.com/login">sandbox Control Panel</a> for your test transactions.</p><p>Refresh to try another transaction.</p>');
+              window.location.assign('http://localhost:3000/producto')
           } else {
             console.log(result);
             $('#checkout-message').html('<h1>Error</h1><p>Check your console.</p>');

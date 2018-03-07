@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/pago', index);
+app.use('/', index);
 app.use('/users', users);
 // The checkout route
 var checkout = require('./routes/checkout');
@@ -35,9 +35,7 @@ app.use('/curso1', (req,res) =>{
   res.render('cursoandroid')
 })
 
-app.use('/curso2', (req,res) =>{
-  res.render('cursospring')
-})
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
