@@ -26,6 +26,8 @@ app.use('/users', users);
 // The checkout route
 var checkout = require('./routes/checkout');
 app.use('/checkout', checkout);
+var email = require('./routes/email');
+app.use('/email', email);
 
 app.use('/producto', (req,res) =>{
   res.render('producto')

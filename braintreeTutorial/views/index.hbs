@@ -15,26 +15,18 @@ window.onload = function(){
 </script>
  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">Start Bootstrap</a>
+        <a class="navbar-brand" href="#">CULTIVATE</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home
+              <a class="nav-link"href="/producto">Productos
                 <span class="sr-only">(current)</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/producto">Productos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
+           
           </ul>
         </div>
       </div>
@@ -44,31 +36,32 @@ window.onload = function(){
  <div class="row">
         <div class="col-lg-6">
         <h1>DATOS</h1>
+            
 <div class="form-group">
       <label for="inputlg">Nombre</label>
-      <input type="text" class="form-control input-lg" id="nombre" placeholder="Nombre">
+      <input type="text" class="form-control input-lg" id="nombre" placeholder="Nombre" required>
 </div>
 <div class="form-group">
   <label for="inputlg">Primer Apellido</label>
-  <input type="text" class="form-control input-lg" id="apellido" placeholder="Apellido" name="">
+  <input type="text" class="form-control input-lg" id="apellido" placeholder="Apellido" name="" required>
 </div>
 <div class="form-group">
   <label for="inputlg">Email</label>
-  <input type="email" class="form-control input-lg" id="mail" placeholder="email" name="">
+  <input type="email" class="form-control input-lg" id="mail" placeholder="email" name="" required>
 </div>
         </div>
         <div class="col-lg-6">
              <h3 class="my-3" id="nombreP"></h3>
           <img class="img-fluid rounded" src="" alt="" id="foto">
-           <h1 id="precio1"></h1>
+           <span class="glyphicon  glyphicons-usd" aria-hidden="true"><h1 id="precio1"></h1></span>
         </div>
       </div>
 
 
 <div id="dropin-wrapper">
-  <div id="checkout-message"></div>
-  <div id="dropin-container"> </div>
-  <button id="submit-button">Submit payment</button>
+  <div id="checkout-message" class="alert alert-success" ></div>
+  <div id="dropin-container" > </div>
+  <button id="submit-button" class="btn btn-primary">Submit payment</button>
 </div>
 
 <script>
@@ -107,8 +100,26 @@ window.onload = function(){
           });
 
           if (result.success) {
+              $.ajax({
+              type: 'POST',
+              url: '/email',
+              data: {
+                'mail': document.getElementById('mail').value,
+                'firstName': document.getElementById('nombre').value,
+                'lastName': document.getElementById('apellido').value,
+                'idOrder': result.transaction.id,
+                'typeCard': result.transaction.creditCard.cardType,
+                'numberCard': result.transaction.creditCard.maskedNumber,
+                'status': result.transaction.status,
+                'amount': result.transaction.amount,
+                'date': result.transaction.createdAt,
+                 'moneda': result.transaction.currencyIsoCode,
+                 'metodo': result.transaction.paymentInstrumentType,
+                 'authCode': result.transaction.processorAuthorizationCode
+              }
+            });
             $('#checkout-message').html('<h1>Success</h1><p>Your Drop-in UI is working! Check your <a href="https://sandbox.braintreegateway.com/login">sandbox Control Panel</a> for your test transactions.</p><p>Refresh to try another transaction.</p>');
-              window.location.assign('http://localhost:3000/producto')
+             // window.location.assign('http://localhost:3000/producto')
           } else {
             console.log(result);
             $('#checkout-message').html('<h1>Error</h1><p>Check your console.</p>');
