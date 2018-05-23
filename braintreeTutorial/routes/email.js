@@ -22,12 +22,12 @@ router.post('/', function (req, res, next) {
     port: 465,
     secure: true,
     auth: {
-      user: 'jorgealvarezlu@gmail.com',
+      user: 'correo@gmail.com',
       pass: 'contrasena'
     }
   });
   let mailOptions = {
-    from: '"Jorge Luis Luna Alvarez" <jorgealvarezlu@gmail.com>', // sender address
+    from: '"Nombre" <Correo>', // sender address
     to: req.body.mail, // list of receivers
     subject: "Transaction receipt",//req.body.subject, // Subject line
     text: datos //req.body.body, // plain text body
